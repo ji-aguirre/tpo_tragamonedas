@@ -7,7 +7,7 @@ public class Caja {
     }
 
 
-    private float saldoMinimo;
+    public float saldoMinimo;
 
     private float saldoActual;
 
@@ -30,7 +30,7 @@ public class Caja {
 
     
     public boolean haySaldoMinimo() {
-		return this.saldoActual == this.saldoMinimo;
+		return this.saldoActual >= this.saldoMinimo;
         
     }
 

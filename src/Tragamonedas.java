@@ -28,6 +28,9 @@ public class Tragamonedas extends Premio {
 
     public int id;
 
+    private float buscarMinimoPremio(){
+
+    }
     private int[] contarOcurrencias(String[] listado){ //funcion auxiliar para contar las ocurrencias de cada fruta en un arreglo
         int[] ocurrencias = new int[this.frutas.length];
         for(int i = 0; i<this.frutas.length;i++){
@@ -44,24 +47,23 @@ public class Tragamonedas extends Premio {
         Premio nuevoPremio = new Premio();
         nuevoPremio.combinacion = premio;
         nuevoPremio.valor = valor;
+        if (valor < this.cajaActual.saldoMinimo){ //me fijo si el premio que voy a agregar es mas bajo que el minimo actual
+            this.cajaActual.saldoMinimo = valor;
+        }
         premios.add(nuevoPremio);
 
     }
 
-    public void quitarPremio() {
-        for (Premio: this.premios){
-
-        }
-        
-    }
 
 
     public String[] generarJugada() {
     	int[] rng = new int[this.cantidadCasillas];
     	String[] jugada = new String[this.cantidadCasillas];
     	this.jugadorActual.jugar(this.precioJugada); // le descuenta el precio de la jugada al credito del jugador
+        this.cajaActual.incrementarSaldo(this.precioJugada);
 
     	Random r = new Random(); //Generador de numeros aleatorios
+
     	for(int i = 0; i< this.cantidadCasillas;i++){
     		rng[i] = r.nextInt(this.frutas.length); //RNG para determinar que fruta sale
 
@@ -74,9 +76,8 @@ public class Tragamonedas extends Premio {
 
         if (valorPremio != 0){
         	if (this.aceptarPremio()){
-        	
         		this.jugadorActual.agregarCredito(valorPremio);
-        		this.cajaActual.incrementarSaldo(valorPremio);
+        		this.cajaActual.reducirSaldo(valorPremio);
 
         	}
 
@@ -133,11 +134,13 @@ public class Tragamonedas extends Premio {
 
     
     public void terminarSesionJugador() {
-
+        //TODO
     }
 
 
     public void cobrarSaldoDisponible() {
+        float saldoACobrar = this.jugadorActual.cobrarCredito();
+
         
     }
 

@@ -15,6 +15,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="settings.editor.selected.configurable" value="reference.settings.ide.settings.web.browsers" />
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -25,5 +26,19 @@
       <updated>1591224083907</updated>
     </task>
     <servers />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="137" y="24" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1591240353476">
+      <screen x="0" y="0" width="1366" height="738" />
+    </state>
+    <state x="137" y="24" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1366.738@0.0.1366.738" timestamp="1591240353476" />
+    <state x="184" y="14" key="SettingsEditor" timestamp="1591239794656">
+      <screen x="0" y="0" width="1366" height="738" />
+    </state>
+    <state x="184" y="14" key="SettingsEditor/0.0.1366.738@0.0.1366.738" timestamp="1591239794656" />
+    <state x="346" y="59" width="672" height="678" key="search.everywhere.popup" timestamp="1591250645544">
+      <screen x="0" y="0" width="1366" height="738" />
+    </state>
+    <state x="346" y="59" width="672" height="678" key="search.everywhere.popup/0.0.1366.738@0.0.1366.738" timestamp="1591250645544" />
   </component>
 </project>
