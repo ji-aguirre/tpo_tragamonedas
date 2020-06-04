@@ -1,4 +1,6 @@
 import java.util.HashMap;
+import java.util.Scanner;
+
 import Tragamonedas;
 public class Controlador {
 
@@ -7,7 +9,7 @@ public class Controlador {
     }
 
 
-    public HashMap maquinas=new HashMap<Integer,Tragamonedas>();
+    public HashMap maquinas=new HashMap<Integer,Tragamonedas>(); //uso un mapa para guardar el id y el tragamonedas correspondiente
     private Tragamonedas obtenerMaquina(int idMaquina){ //TODO validacion de argumentos
         Integer id = idMaquina;
         Tragamonedas maquina = (Tragamonedas) this.maquinas.get(id);
@@ -16,6 +18,7 @@ public class Controlador {
 
     public boolean iniciarJuego(float saldoInicial, int idMaquina) { //TODO validar args
         Tragamonedas maquina = this.obtenerMaquina(idMaquina);
+        maquina.iniciarSesionJugador(saldoInicial);
 
         return false;
     }
@@ -32,20 +35,30 @@ public class Controlador {
     public boolean realizarJugada(int idMaquina) { //TODO validar args
         Tragamonedas maquina = this.obtenerMaquina(idMaquina);
 
-        maquina.generarJugada();
+        String[] jugada = maquina.generarJugada();
+        float resp = maquina.tienePremio(jugada);
+        if (resp !=0){
+            this.aceptaPremio(idMaquina,resp);
+        }
 
         return false;
     }
 
     
-    public void aceptaPremio(int idMaquina, boolean acepta) { //TODO validar args
+    public void aceptaPremio(int idMaquina, float valorPremio) { //TODO validar args
         Tragamonedas maquina = this.obtenerMaquina(idMaquina);
+
+        Scanner lector = new Scanner(System.in);
+        String aceptaPremio = lector.nextLine();
+        if (aceptaPremio == "true"){
+            maquina.aceptarPremio(valorPremio);
+        }
 
     }
 
 
     public boolean crearTragamonedas(float saldoInicial, int casillas) { //TODO validar args
-        
+        Tragamonedas nuevaMaquina = new Tragamonedas()
         return false;
     }
 

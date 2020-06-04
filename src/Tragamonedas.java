@@ -29,7 +29,7 @@ public class Tragamonedas extends Premio {
     public int id;
 
     private float buscarMinimoPremio(){
-
+        return 0;
     }
     private int[] contarOcurrencias(String[] listado){ //funcion auxiliar para contar las ocurrencias de cada fruta en un arreglo
         int[] ocurrencias = new int[this.frutas.length];
@@ -72,25 +72,21 @@ public class Tragamonedas extends Premio {
     		jugada[i] = this.frutas[rng[i]]; //Transformo la lista de RNG en strings 
     	}
 
-    	float valorPremio = this.tienePremio(jugada); //Si es 0 sgnifica que no hay premio
+    	//float valorPremio = this.tienePremio(jugada); //Si es 0 sgnifica que no hay premio
 
-        if (valorPremio != 0){
-        	if (this.aceptarPremio()){
-        		this.jugadorActual.agregarCredito(valorPremio);
-        		this.cajaActual.reducirSaldo(valorPremio);
+        //if (valorPremio != 0){
+        //	if (this.aceptarPremio()){
+        //
+        //	}
 
-        	}
-
-        }
+        //}
         return jugada;
     }
 
 
-    public boolean aceptarPremio() {
-
-        Scanner lector = new Scanner(System.in);
-        String aceptaPremio = lector.nextLine();
-        return aceptaPremio == "si";
+    public boolean aceptarPremio(float valorPremio) { //TODO validar args
+        this.jugadorActual.agregarCredito(valorPremio);
+        this.cajaActual.reducirSaldo(valorPremio);
     }
 
 
@@ -134,7 +130,7 @@ public class Tragamonedas extends Premio {
 
     
     public void terminarSesionJugador() {
-        //TODO
+
     }
 
 
