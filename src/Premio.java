@@ -1,12 +1,9 @@
 public class Premio {
  //Los premios 
  
-    public Premio(String[] premio) {
-    	for(int i = 0; i<premio.lenght;i++){
-    		
-
-    	}
+    public Premio() {
     }
-
+    public int id;
+    public String[] combinacion;
     public float valor;
 }

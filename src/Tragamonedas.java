@@ -1,24 +1,24 @@
 import java.util.ArrayList;
-import java.util.Random
-import Premio
-import Jugador
-import Caja
-import java.util.Scanner
+import java.util.Random;
+import Premio;
+import Jugador;
+import Caja;
+import java.util.Scanner;
 
 public class Tragamonedas extends Premio {
 
 
     public Tragamonedas(float saldoIni, int cantCasillas) {
-    	this.cajaActual = new Caja(saldoIni)
-    	this.cantidadCasillas = cantCasillas
+    	this.cajaActual = new Caja(saldoIni);
+    	this.cantidadCasillas = cantCasillas;
     }
 
 
     private ArrayList<Premio> premios = new ArrayList<Premio>();
 
-    private String[] frutas = {"banana","frutilla","guinda","manzana","sandia","uva"};
+    private final String[] frutas = {"banana","frutilla","guinda","manzana","sandia","uva"};
 
-    private int cantidadCasillas;
+    private final int cantidadCasillas;
 
     public Jugador jugadorActual;
 
@@ -28,37 +28,55 @@ public class Tragamonedas extends Premio {
 
     public int id;
 
+    private int[] contarOcurrencias(String[] listado){ //funcion auxiliar para contar las ocurrencias de cada fruta en un arreglo
+        int[] ocurrencias = new int[this.frutas.length];
+        for(int i = 0; i<this.frutas.length;i++){
+            for(String palabra:listado){
+                if (palabra == this.frutas[i]){
+                        ocurrencias[i] += 1;
+                }
+            }
+        }
+        return ocurrencias;
 
-    public Premio agregarPremio(String[] premio) {
+    }
+    public void agregarPremio(String[] premio, float valor) { //TODO verificacion de datos
+        Premio nuevoPremio = new Premio();
+        nuevoPremio.combinacion = premio;
+        nuevoPremio.valor = valor;
+        premios.add(nuevoPremio);
 
-     return null;
     }
 
     public void quitarPremio() {
+        for (Premio: this.premios){
+
+        }
         
     }
 
 
     public String[] generarJugada() {
-    	int[] rng = new int[this.cantidadCasillas]
-    	String[] jugada = new String[this.cantidadCasillas]
+    	int[] rng = new int[this.cantidadCasillas];
+    	String[] jugada = new String[this.cantidadCasillas];
+    	this.jugadorActual.jugar(this.precioJugada); // le descuenta el precio de la jugada al credito del jugador
 
-    	Random r = new Random()
+    	Random r = new Random(); //Generador de numeros aleatorios
     	for(int i = 0; i< this.cantidadCasillas;i++){
-    		rng[i] = r.nextInt(this.frutas.lenght); //RNG para determinar que fruta sale 
+    		rng[i] = r.nextInt(this.frutas.length); //RNG para determinar que fruta sale
 
     	}
     	for(int i = 0; i< this.cantidadCasillas;i++){
     		jugada[i] = this.frutas[rng[i]]; //Transformo la lista de RNG en strings 
     	}
 
-    	float valorPremio = this.tienePremio(jugada) //Si es 0 sgnifica que no hay premio
+    	float valorPremio = this.tienePremio(jugada); //Si es 0 sgnifica que no hay premio
 
         if (valorPremio != 0){
-        	if this.aceptarPremio(){
+        	if (this.aceptarPremio()){
         	
-        		this.jugadorActual.agregarCredito(valorPremio)
-        		this.cajaActual.incrementarSaldo(valorPremio)
+        		this.jugadorActual.agregarCredito(valorPremio);
+        		this.cajaActual.incrementarSaldo(valorPremio);
 
         	}
 
@@ -70,50 +88,52 @@ public class Tragamonedas extends Premio {
     public boolean aceptarPremio() {
 
         Scanner lector = new Scanner(System.in);
-        String aceptaPremio = lector.nextLine()
-        if aceptaPremio == "si"{
-
-        	return false
-        }
-        return false
+        String aceptaPremio = lector.nextLine();
+        return aceptaPremio == "si";
     }
 
 
-    public void saldoActual() {
+    public float saldoActual() {
+        return this.jugadorActual.mostrarCredito();
     	
     }
 
 
     public boolean verificarSaldoMinimo() {
 
-
-        
-        return false;
+        return this.cajaActual.haySaldoMinimo();
     }
 
 
     public int soyLaMaquina() {
         
-        return 0;
+        return this.id;
     }
 
 
     public float tienePremio(String[] jugada) {
     	//la funcion retorna true si las cantidades de cada fruta de la jugada coinciden con las de alguno de los premios
-        
-        return false;
+        for(Premio premio : this.premios){ // itero sobre todos los premios cargados
+            if (premio.combinacion == jugada){ //me fijo si la combinacion ganadora es igual a la de la jugada. HAY QUE VER COMO HACER PARA LOS QUE ESTAN DESORDENADOS
+                return premio.valor;
+            }
+        }
+        return 0;
     }
 
 
     public boolean iniciarSesionJugador(float saldoInicial) {
-    	this.jugadorActual = new Jugador(saldoInicial)
-        
+        if(saldoInicial < 0){
+            return false;
+        }else {
+            this.jugadorActual = new Jugador(saldoInicial);
+        }
         return false;
     }
 
     
     public void terminarSesionJugador() {
-        
+
     }
 
 

@@ -6,7 +6,7 @@ public class Jugador {
 	
 	
     public Jugador(float saldoIni) {
-        this.credito = saldoIni
+        this.credito = saldoIni;
     }
     
 
@@ -25,7 +25,7 @@ public class Jugador {
     	if(this.credito==0) {
     		return 0;
     	}else {
-            float cobra = this.credito
+            float cobra = this.credito;
     		this.credito = 0;
     		return cobra;
     	}
