@@ -1,3 +1,5 @@
+package paquete;
+
 public class Premio {
  //Los premios 
  

@@ -1,4 +1,4 @@
-
+package paquete;
 
 public class Jugador {
 
@@ -14,7 +14,8 @@ public class Jugador {
     	if (nro < 0){
     		return false;
     	}else{
-    		this.credito = nro;
+    		System.out.println("Agrego credito al jugador");
+    		this.credito += nro;
     		return true;
     	}
         

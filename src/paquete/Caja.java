@@ -1,7 +1,8 @@
+package paquete;
+
 public class Caja {
 
-	
-	
+
     public Caja(float saldoIni) {
     	this.saldoActual= saldoIni;
     }
@@ -15,7 +16,7 @@ public class Caja {
 
     public void incrementarSaldo(float nro) {
     	if(nro>0) {
-    		this.saldoActual = nro;
+    		this.saldoActual += nro;
     	}
         
     }
@@ -26,6 +27,9 @@ public class Caja {
     		this.saldoActual = this.saldoActual - nro;
     	}
         
+    }
+    public float saldoActual(){
+        return this.saldoActual;
     }
 
     
