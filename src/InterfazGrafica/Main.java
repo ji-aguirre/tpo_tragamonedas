@@ -10,7 +10,5 @@ public class Main {
 		miVentanaPrincipal.setSize(400, 300);
 		miVentanaPrincipal.setLocation(450,230);
 		miVentanaPrincipal.setVisible(true);
-
 	}
-
 }
