@@ -28,11 +28,11 @@ public class VentanaJugar extends JFrame {
 		
 		lblPrecioJugada = new JLabel("Precio jugada = $5");
 		lblPrecioJugada.setBounds(130, 20, 130, 30);
-		btnSorteado1 = new JButton("Banana");
+		btnSorteado1 = new JButton();
 		btnSorteado1.setBounds(60, 80, 60, 60);
-		btnSorteado2 = new JButton("Manzana");
+		btnSorteado2 = new JButton();
 		btnSorteado2.setBounds(140, 80, 60, 60);
-		btnSorteado3 = new JButton("Pera");
+		btnSorteado3 = new JButton();
 		btnSorteado3.setBounds(220, 80, 60, 60);
 		btnJugar = new JButton("JUGAR");
 		btnJugar.setBounds(30,170,130,30);
