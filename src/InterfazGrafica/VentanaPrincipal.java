@@ -19,8 +19,8 @@ public class VentanaPrincipal extends JFrame implements ActionListener,ChangeLis
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private JLabel lblMáquinasDisponibles;
-	private JComboBox<String> cboMáquinasDisponibles;
+	private JLabel lblMaquinasDisponibles;
+	private JComboBox<String> cboMaquinasDisponibles;
 	private JButton btnJugar, btnAgregarMaquina, btnSalir, btnConfigurar;
 
 	public VentanaPrincipal(){
@@ -45,9 +45,10 @@ public class VentanaPrincipal extends JFrame implements ActionListener,ChangeLis
 			@Override
 			public void actionPerformed(ActionEvent e) { //Abro una ventana nueva
 				VentanaJugar v = new VentanaJugar();
-				v.setSize(400, 300);
+				v.setSize(350, 300);
 				v.setLocation(450,230);
 				v.setVisible(true);
+				v.setTitle((String) cboMaquinasDisponibles.getSelectedItem());
 				btnJugar.setEnabled(false); //Una vez q abri una ventana no puedo volver a hacerlo
 											//el boton queda gris e inabilitado...sirve para que no 
 											//me abran muchas ventanas.
@@ -62,6 +63,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener,ChangeLis
 				v.setSize(400, 300);
 				v.setLocation(450,230);
 				v.setVisible(true);
+				v.setTitle((String) cboMaquinasDisponibles.getSelectedItem());
 				btnConfigurar.setEnabled(false); //Una vez q abri una ventana no puedo volver a hacerlo
 												 //el boton queda gris e inabilitado...sirve para que no 
 												 //me abran muchas ventanas.
@@ -75,13 +77,13 @@ public class VentanaPrincipal extends JFrame implements ActionListener,ChangeLis
 		c.setLayout(null);
 		this.setTitle("Casino Pirulo");
 		
-		lblMáquinasDisponibles = new JLabel("Máquinas Disponibles");
-		lblMáquinasDisponibles.setBounds(40, 40, 130, 30);
-		cboMáquinasDisponibles = new JComboBox<String>();
-		cboMáquinasDisponibles.setBounds(30, 80, 150, 30);
-		cboMáquinasDisponibles.addItem("Juan");
-		cboMáquinasDisponibles.addItem("Joaco");
-		cboMáquinasDisponibles.addItem("Somos máquinas");
+		lblMaquinasDisponibles = new JLabel("Máquinas Disponibles");
+		lblMaquinasDisponibles.setBounds(40, 40, 130, 30);
+		cboMaquinasDisponibles = new JComboBox<String>();
+		cboMaquinasDisponibles.setBounds(30, 80, 150, 30);
+		cboMaquinasDisponibles.addItem("Juan");
+		cboMaquinasDisponibles.addItem("Joaco");
+		cboMaquinasDisponibles.addItem("Somos máquinas");
 		btnJugar = new JButton("JUGAR");
 		btnJugar.setBounds(200, 80, 150, 30);
 		btnAgregarMaquina = new JButton("Agregar Máquina");
@@ -91,8 +93,8 @@ public class VentanaPrincipal extends JFrame implements ActionListener,ChangeLis
 		btnConfigurar = new JButton("Configurar");
 		btnConfigurar.setBounds(200,200,150,30);
 		
-		c.add(lblMáquinasDisponibles);
-		c.add(cboMáquinasDisponibles);
+		c.add(lblMaquinasDisponibles);
+		c.add(cboMaquinasDisponibles);
 		c.add(btnJugar);
 		c.add(btnAgregarMaquina);
 		c.add(btnSalir);
