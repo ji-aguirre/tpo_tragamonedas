@@ -35,9 +35,9 @@ public class VentanaJugar extends JFrame {
 		btnSorteado3 = new JButton("Pera");
 		btnSorteado3.setBounds(220, 80, 60, 60);
 		btnJugar = new JButton("JUGAR");
-		btnJugar.setBounds(40,170,130,30);
+		btnJugar.setBounds(30,170,130,30);
 		btnCobrar = new JButton("Cobrar");
-		btnCobrar.setBounds(40, 215, 130, 30);
+		btnCobrar.setBounds(30, 215, 130, 30);
 		btnAceptarPremio = new JButton("Aceptar premio");
 		btnAceptarPremio.setBounds(180, 215, 130, 30);
 		btnCredito = new JButton("Crédito: $1000");
