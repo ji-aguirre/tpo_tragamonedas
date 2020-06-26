@@ -1,4 +1,4 @@
-package paquete;
+package ModeloCasino;
 
 public class Jugador {
 

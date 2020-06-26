@@ -1,4 +1,4 @@
-package paquete;
+package ModeloCasino;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,22 +28,12 @@ public class Tragamonedas extends Premio {
 
     public int id;
 
+    private String[] ultimaJugada;
+
     public void modificarPrecioJugada(float precio){
         this.precioJugada = precio;
     }
 
-    private int[] contarOcurrencias(String[] listado){ //funcion auxiliar para contar las ocurrencias de cada fruta en un arreglo
-        int[] ocurrencias = new int[this.frutas.length];
-        for(int i = 0; i<this.frutas.length;i++){
-            for(String palabra:listado){
-                if (palabra.equals(this.frutas[i])){
-                        ocurrencias[i] += 1;
-                }
-            }
-        }
-        return ocurrencias;
-
-    }
     public void agregarPremio(String[] premio, float valor) { //TODO verificacion de datos
         Premio nuevoPremio = new Premio();
         nuevoPremio.combinacion = premio;
@@ -59,7 +49,7 @@ public class Tragamonedas extends Premio {
 
 
 
-    public String[] generarJugada() {
+    public void generarJugada() {
     	int[] rng = new int[this.cantidadCasillas];
     	String[] jugada = new String[this.cantidadCasillas];
 
@@ -73,20 +63,32 @@ public class Tragamonedas extends Premio {
     		jugada[i] = this.frutas[rng[i]]; //Transformo la lista de RNG en strings 
     	}
 
-        System.out.println("Jugada: " + Arrays.toString(jugada) + " Precio: "+this.precioJugada);
-        return jugada;
+        //System.out.println("Jugada: " + Arrays.toString(jugada) + " Precio: "+this.precioJugada);
+        this.ultimaJugada = jugada;
+    }
+    public String[] getUltimaJugada(){
+        return this.ultimaJugada;
     }
 
 
     public void aceptarPremio(float valorPremio) { //TODO validar args
         this.agregarCreditoJugador(valorPremio);
-        System.out.println("Agregue al jugador" + valorPremio);
+        //System.out.println("Agregue al jugador" + valorPremio);
         this.cajaActual.reducirSaldo(valorPremio);
     }
 
     public void agregarCreditoJugador(float credito){
         this.jugadorActual.agregarCredito(credito);
 
+    }
+    public void descontarCreditoJugador(float credito){
+        this.jugadorActual.jugar(credito);
+    }
+    public void descontarCaja(float credito){
+        this.cajaActual.reducirSaldo(credito);
+    }
+    public void incrementarCaja(float credito){
+        this.cajaActual.incrementarSaldo(credito);
     }
 
     public float cajaActual(){
@@ -111,7 +113,6 @@ public class Tragamonedas extends Premio {
 
     public float tienePremio(String[] jugada) {
     	//la funcion retorna el valor del premio si las cantidades de cada fruta de la jugada coinciden con las de alguno de los premios
-        int indice = 0;
         int cant = 0;
 
         for(Premio premio : this.premios){ // itero sobre todos los premios cargados
@@ -124,7 +125,7 @@ public class Tragamonedas extends Premio {
                 }
             }
             if(cant == this.cantidadCasillas){
-                System.out.println("Coinciden! Hay premio" + premio.valor);
+                //System.out.println("Coinciden! Hay premio" + premio.valor);
                 return premio.valor;
             }
         }

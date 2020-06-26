@@ -1,7 +1,7 @@
-package paquete;
+package ModeloCasino;
 
 import java.util.HashMap;
-import java.util.Scanner;
+import java.util.Set;
 
 public class Controlador {
 
@@ -33,40 +33,31 @@ public class Controlador {
     }
 
     
-    public boolean realizarJugada(int idMaquina) { //TODO validar args
+    public float realizarJugada(int idMaquina) { //TODO validar args
         Tragamonedas maquina = this.obtenerMaquina(idMaquina);
 
         if (maquina.mostrarCreditoJugador() < maquina.precioJugada){ //Si el jugador no tiene credito no juega
-            return false;
+            return 0;
         }else {
-            maquina.jugadorActual.jugar(maquina.precioJugada); //descuento valor de jugada
-            maquina.cajaActual.incrementarSaldo(maquina.precioJugada);
+            maquina.descontarCreditoJugador(maquina.precioJugada); //descuento valor de jugada
+            maquina.incrementarCaja(maquina.precioJugada);
 
-            String[] jugada = maquina.generarJugada();
-            float resp = maquina.tienePremio(jugada);
-            if (resp > 0) {
-                this.aceptaPremio(idMaquina, resp);
-            }else{
-                return false;
-            }
+            maquina.generarJugada();
+            return maquina.tienePremio(maquina.getUltimaJugada());
+
         }
-        return true;
 
     }
 
     
-    public void aceptaPremio(int idMaquina, float valorPremio) { //TODO validar args
+    public void aceptarPremio(int idMaquina, float valorPremio) { //TODO validar args
         Tragamonedas maquina = this.obtenerMaquina(idMaquina);
-
-        Scanner lector = new Scanner(System.in);
-        String aceptaPremio = lector.nextLine();
-        if (aceptaPremio.equals("yes")){
-            if(maquina.verificarSaldoMinimo()) {
-                maquina.aceptarPremio(valorPremio);
-            }else{
-                System.out.println("La maquina no posee saldo para pagar el premio. ");
-            }
+        if(maquina.verificarSaldoMinimo()) {
+            maquina.aceptarPremio(valorPremio);
+        }else{
+            System.out.println("La maquina no posee saldo para pagar el premio. ");
         }
+
 
     }
 
@@ -129,6 +120,11 @@ public class Controlador {
     public boolean existeMaquina(int idMaquina){
         return this.maquinas.containsKey(idMaquina);
     }
+
+    public Set listadoMaquinas(){ //Listado de las maquinas disponibles en el Hashmap
+        return this.maquinas.keySet();
+    }
+
 
 
 }
