@@ -1,7 +1,6 @@
 package ModeloCasino;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Random;
 
 public class Tragamonedas extends Premio {
@@ -14,21 +13,21 @@ public class Tragamonedas extends Premio {
     }
 
 
-    private ArrayList<Premio> premios = new ArrayList<Premio>();
+    private ArrayList<Premio> premios = new ArrayList<Premio>(); //Listado de premios de la maquina
 
-    private final String[] frutas = {"banana","frutilla","guinda","manzana","sandia","uva"};
+    private final String[] frutas = {"banana","frutilla","guinda","manzana","sandia","uva"}; //Frutas de la maquina
 
-    public final int cantidadCasillas;
+    public final int cantidadCasillas; //Cantidad de casillas de la maquina
 
-    public Jugador jugadorActual;
+    public Jugador jugadorActual; //Billetera del jugador actual en la maquina (volatil)
 
-    public Caja cajaActual;
+    public Caja cajaActual; //Caja de la maquina
 
-    public float precioJugada;
+    public float precioJugada; //Precio de la jugada de la maquina
 
-    public int id;
+    public int id; // ID unico de la maquina
 
-    private String[] ultimaJugada;
+    private String[] ultimaJugada; //Mantiene la ultima jugada realizada (para mostrar en cualquier momento)
 
     public void modificarPrecioJugada(float precio){
         this.precioJugada = precio;

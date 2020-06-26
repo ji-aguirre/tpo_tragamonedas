@@ -1,11 +1,10 @@
 package ModeloCasino;
 
 public class Premio {
- //Los premios 
- 
+
     public Premio() {
     }
-    public int id;
-    public String[] combinacion;
-    public float valor;
+    public int id; //Id del premio
+    public String[] combinacion; //Combinacion ganadora
+    public float valor; //Monto a premiar
 }

@@ -5,20 +5,20 @@ import java.util.Set;
 
 public class Controlador {
 
-	
-    public Controlador() {
+    public Controlador() { //Constructor
     }
-
 
     public HashMap maquinas=new HashMap<Integer,Tragamonedas>(); //uso un mapa para guardar el id y el tragamonedas correspondiente
 
-    public Tragamonedas obtenerMaquina(int idMaquina){ //TODO validacion de argumentos
+    public Tragamonedas obtenerMaquina(int idMaquina){ //Obtiene la instacia de la maquina a la cual pertenece el id
+        //TODO validacion de argumentos
         Integer id = idMaquina;
         Tragamonedas maquina = (Tragamonedas) this.maquinas.get(id);
         return maquina;
     }
 
-    public boolean iniciarJuego(float saldoInicial, int idMaquina) { //TODO validar args
+    public boolean iniciarJuego(float saldoInicial, int idMaquina) { //Empieza un nuevo jugador en la maquina (Pasa credito inicial del jugador)
+        //TODO validar args
         Tragamonedas maquina = this.obtenerMaquina(idMaquina);
         maquina.iniciarSesionJugador(saldoInicial);
 
@@ -27,13 +27,15 @@ public class Controlador {
 
 
 
-    public void cobrarCreditoDisponible(int idMaquina) { //TODO validar args
+    public void cobrarCreditoDisponible(int idMaquina) { //"Retira" el credito del jugador (destructivo)
+        //TODO validar args
         Tragamonedas maquina = this.obtenerMaquina(idMaquina);
         maquina.cobrarSaldoDisponible();
     }
 
     
-    public float realizarJugada(int idMaquina) { //TODO validar args
+    public float realizarJugada(int idMaquina) { //Genera una nueva jugada en una maquina y devuelve el monto del premio ganado (0 si no hubo premio)
+        //TODO validar args
         Tragamonedas maquina = this.obtenerMaquina(idMaquina);
 
         if (maquina.mostrarCreditoJugador() < maquina.precioJugada){ //Si el jugador no tiene credito no juega
@@ -50,7 +52,8 @@ public class Controlador {
     }
 
     
-    public void aceptarPremio(int idMaquina, float valorPremio) { //TODO validar args
+    public void aceptarPremio(int idMaquina, float valorPremio) { //Acepta el premio de una maquina
+        //TODO validar args
         Tragamonedas maquina = this.obtenerMaquina(idMaquina);
         if(maquina.verificarSaldoMinimo()) {
             maquina.aceptarPremio(valorPremio);
@@ -62,7 +65,8 @@ public class Controlador {
     }
 
 
-    public void crearTragamonedas(float saldoInicial, int casillas, float precioJugada) { //TODO validar args
+    public void crearTragamonedas(float saldoInicial, int casillas, float precioJugada) {  //Crea una nueva maquina y la agrega a lista de maquinas
+        //TODO validar args
         Tragamonedas nuevaMaquina = new Tragamonedas(saldoInicial, casillas, precioJugada);
         int id = this.maquinas.size() + 1;
         nuevaMaquina.id = id;
@@ -74,21 +78,24 @@ public class Controlador {
     }
 
 
-    public Tragamonedas eliminarTragamonedas(int idMaquina) { //TODO validar args
+    public Tragamonedas eliminarTragamonedas(int idMaquina) { //Elimina una maquina del listado de maquinas (destructivo)
+        //TODO validar args
         Tragamonedas maquina = (Tragamonedas) this.maquinas.get(idMaquina);
         return (Tragamonedas) this.maquinas.remove(idMaquina);
 
     }
 
 
-    public void agregarCreditoAlJugador(int idMaquina, float credito) { //TODO validar args
+    public void agregarCreditoAlJugador(int idMaquina, float credito) { //Agrega credito al jugador actual de la maquina
+        //TODO validar args
         Tragamonedas maquina = this.obtenerMaquina(idMaquina);
         maquina.agregarCreditoJugador(credito);
 
     }
 
 
-    public void agregarPremio(int idMaquina, String[] premio, float valorPremio) { //TODO validar args
+    public void agregarPremio(int idMaquina, String[] premio, float valorPremio) { //Agrega un premio a la lista de premios de una maquina
+        //TODO validar args
         Tragamonedas maquina = this.obtenerMaquina(idMaquina);
         maquina.agregarPremio(premio,valorPremio);
 
@@ -96,33 +103,40 @@ public class Controlador {
     }
 
 
-    public boolean eliminarPremio(int idMaquina, int idPremio) { //TODO validar args
+    public boolean eliminarPremio(int idMaquina, int idPremio) { //Elimina un premio de la lista de premios de una maquina
+        //TODO validar args
         Tragamonedas maquina = this.obtenerMaquina(idMaquina);
-        if (maquina.quitarPremioDeLista(idPremio)) {
-            return true;
-        } else {
-            return false;
-        }
+        return maquina.quitarPremioDeLista(idPremio);
     }
-    public float mostrarCreditoMaquina(int idMaquina){
+
+    public float mostrarCreditoMaquina(int idMaquina){ //Devuelve el credito actual de la maquina
         Tragamonedas maquina = this.obtenerMaquina(idMaquina);
         return maquina.mostrarCreditoJugador();
     }
-    public float mostrarCajaMaquina(int idMaquina){
+
+    public float mostrarCajaMaquina(int idMaquina){ //Devuelve el monto de la caja actual de la maquina
         Tragamonedas maquina = this.obtenerMaquina(idMaquina);
         return maquina.cajaActual();
     }
-    public boolean puedeJugar(int idMaquina){
+
+    public String[] mostrarUltimaJugada(int idMaquina){ //Devuelve la ultima jugada realizada (para mostrar en pantalla)
+        Tragamonedas maquina = this.obtenerMaquina(idMaquina);
+        return maquina.getUltimaJugada();
+
+    }
+
+    public boolean puedeJugar(int idMaquina){ //Verifica que se pueda realizar una jugada en la maquina
         Tragamonedas maquina = this.obtenerMaquina(idMaquina);
         return maquina.verificarSaldoMinimo() && maquina.mostrarCreditoJugador() >= maquina.precioJugada;
 
     }
-    public boolean existeMaquina(int idMaquina){
+    public boolean existeMaquina(int idMaquina){ //Verifica la existencia de una maquina
         return this.maquinas.containsKey(idMaquina);
     }
 
-    public Set listadoMaquinas(){ //Listado de las maquinas disponibles en el Hashmap
-        return this.maquinas.keySet();
+    public Set<Integer> listadoMaquinas(){ //Listado de las maquinas disponibles en el Hashmap
+        Set<Integer> listado = this.maquinas.keySet();
+        return listado;
     }
 
 

@@ -2,7 +2,7 @@ package ModeloCasino;
 
 public class Jugador {
 
-	private float credito;
+	private float credito; //Credito disponible al jugador
 	
 	
     public Jugador(float saldoIni) {
@@ -10,7 +10,7 @@ public class Jugador {
     }
     
 
-    public boolean agregarCredito(float nro) {
+    public boolean agregarCredito(float nro) { //Agrega credito
     	if (nro < 0){
     		return false;
     	}else{
@@ -22,7 +22,7 @@ public class Jugador {
     }
 
     
-    public float cobrarCredito() {
+    public float cobrarCredito() { //Retirar credito del jugador
     	if(this.credito==0) {
     		return 0;
     	}else {
@@ -34,7 +34,7 @@ public class Jugador {
     }
 
  
-    public boolean jugar(float precioJugada) {
+    public boolean jugar(float precioJugada) { //Cobrar una jugada
     	if(this.credito < precioJugada) {
     		return false;
     	}else {
@@ -45,7 +45,7 @@ public class Jugador {
     }
 
    
-    public float mostrarCredito() {
+    public float mostrarCredito() { //Mostrar credito del jugador
         return this.credito;
     }
 
