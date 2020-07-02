@@ -1,9 +1,12 @@
-package paquete;
+package Tests;
+
+import ModeloCasino.Controlador;
+import ModeloCasino.Tragamonedas;
 
 import java.util.Random;
 public class Casino {
 
-    public static void main(String[] args){
+    public static void test(){
         final String[] frutas = {"banana","frutilla","guinda","manzana","sandia","uva"};
         Controlador control = new Controlador();
         int nroMaquinas = 10;

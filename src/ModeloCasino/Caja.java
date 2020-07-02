@@ -4,6 +4,7 @@ public class Caja {
 
     public Caja(float saldoIni) {
     	this.saldoActual= saldoIni;
+    	this.saldoMinimo = Float.MAX_VALUE;
     }
 
     public float saldoMinimo;
