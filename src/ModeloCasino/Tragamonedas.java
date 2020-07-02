@@ -38,9 +38,11 @@ public class Tragamonedas extends Premio {
         nuevoPremio.combinacion = premio;
         nuevoPremio.valor = valor;
 
-        if (valor < this.cajaActual.saldoMinimo){ //me fijo si el premio que voy a agregar es mas bajo que el minimo actual
+        if (nuevoPremio.valor < this.cajaActual.saldoMinimo){ //me fijo si el premio que voy a agregar es mas bajo que el minimo actual
+            System.out.println("valor "+valor);
             this.cajaActual.saldoMinimo = valor;
         }
+        System.out.println("saldo minimo "+this.cajaActual.saldoMinimo);
         premios.add(nuevoPremio);
         nuevoPremio.id = premios.indexOf(nuevoPremio);
 
@@ -49,17 +51,18 @@ public class Tragamonedas extends Premio {
 
 
     public void generarJugada() {
-    	int[] rng = new int[this.cantidadCasillas];
+    	int[] numeros = new int[this.cantidadCasillas];
     	String[] jugada = new String[this.cantidadCasillas];
 
-    	Random r = new Random(); //Generador de numeros aleatorios
+    	Random rng = new Random(); //Generador de numeros aleatorios
 
     	for(int i = 0; i< this.cantidadCasillas;i++){
-    		rng[i] = r.nextInt(this.frutas.length); //RNG para determinar que fruta sale
+    		numeros[i] = rng.nextInt(this.frutas.length); //RNG para determinar que fruta sale
+
 
     	}
     	for(int i = 0; i< this.cantidadCasillas;i++){
-    		jugada[i] = this.frutas[rng[i]]; //Transformo la lista de RNG en strings 
+    		jugada[i] = this.frutas[numeros[i]]; //Transformo la lista de RNG en strings
     	}
 
         //System.out.println("Jugada: " + Arrays.toString(jugada) + " Precio: "+this.precioJugada);
@@ -104,11 +107,6 @@ public class Tragamonedas extends Premio {
         
         return this.id;
     }
-    private void print(String[] array){ //Para debuggear
-        for(String pal : array){
-            System.out.println(pal);
-        }
-    }
 
     public float tienePremio(String[] jugada) {
     	//la funcion retorna el valor del premio si las cantidades de cada fruta de la jugada coinciden con las de alguno de los premios
@@ -147,9 +145,9 @@ public class Tragamonedas extends Premio {
     }
 
 
-    public void cobrarSaldoDisponible() {
+    public float cobrarSaldoDisponible() {
         float saldoACobrar = this.jugadorActual.cobrarCredito();
-        System.out.println(saldoACobrar);
+        return saldoACobrar;
 
         
     }
@@ -165,6 +163,18 @@ public class Tragamonedas extends Premio {
     }
     public float mostrarCreditoJugador(){
         return this.jugadorActual.mostrarCredito();
+    }
+    public ArrayList<String[]> listarPremios(){
+        ArrayList<String[]> listaPremios = new ArrayList<String[]>();
+        for(Premio prem : premios){
+            listaPremios.add(prem.combinacion.clone());
+        }
+        return listaPremios;
+    }
+
+    public float getValorPremio(int idPremio){
+        return premios.get(idPremio).valor;
+
     }
 
 }

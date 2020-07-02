@@ -1,5 +1,6 @@
 package ModeloCasino;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
 
@@ -17,23 +18,19 @@ public class Controlador {
         return maquina;
     }
 
-    public boolean iniciarJuego(float saldoInicial, int idMaquina) { //Empieza un nuevo jugador en la maquina (Pasa credito inicial del jugador)
+    public void iniciarJuego(float saldoInicial, int idMaquina) { //Empieza un nuevo jugador en la maquina (Pasa credito inicial del jugador)
         //TODO validar args
         Tragamonedas maquina = this.obtenerMaquina(idMaquina);
         maquina.iniciarSesionJugador(saldoInicial);
 
-        return false;
     }
 
-
-
-    public void cobrarCreditoDisponible(int idMaquina) { //"Retira" el credito del jugador (destructivo)
+    public float cobrarCreditoDisponible(int idMaquina) { //"Retira" el credito del jugador (destructivo)
         //TODO validar args
         Tragamonedas maquina = this.obtenerMaquina(idMaquina);
-        maquina.cobrarSaldoDisponible();
+        return maquina.cobrarSaldoDisponible();
     }
 
-    
     public float realizarJugada(int idMaquina) { //Genera una nueva jugada en una maquina y devuelve el monto del premio ganado (0 si no hubo premio)
         //TODO validar args
         Tragamonedas maquina = this.obtenerMaquina(idMaquina);
@@ -45,13 +42,13 @@ public class Controlador {
             maquina.incrementarCaja(maquina.precioJugada);
 
             maquina.generarJugada();
+            System.out.println("jugadaaaaaaaaa");
             return maquina.tienePremio(maquina.getUltimaJugada());
 
         }
 
     }
 
-    
     public void aceptarPremio(int idMaquina, float valorPremio) { //Acepta el premio de una maquina
         //TODO validar args
         Tragamonedas maquina = this.obtenerMaquina(idMaquina);
@@ -65,16 +62,18 @@ public class Controlador {
     }
 
 
-    public void crearTragamonedas(float saldoInicial, int casillas, float precioJugada) {  //Crea una nueva maquina y la agrega a lista de maquinas
+    public int crearTragamonedas(float saldoInicial, int casillas, float precioJugada) {  //Crea una nueva maquina y la agrega a lista de maquinas
         //TODO validar args
         Tragamonedas nuevaMaquina = new Tragamonedas(saldoInicial, casillas, precioJugada);
         int id = this.maquinas.size() + 1;
         nuevaMaquina.id = id;
-        System.out.println(id);
+        //System.out.println(id);
         while (this.maquinas.containsKey(id)){ //Busco la siguiente clave disponible en caso de que este usada la que quiero
             id +=1;
         }
         maquinas.put(id,nuevaMaquina);
+        iniciarJuego(0,id);
+        return id;
     }
 
 
@@ -97,14 +96,12 @@ public class Controlador {
     public void agregarPremio(int idMaquina, String[] premio, float valorPremio) { //Agrega un premio a la lista de premios de una maquina
         //TODO validar args
         Tragamonedas maquina = this.obtenerMaquina(idMaquina);
-        maquina.agregarPremio(premio,valorPremio);
-
+        maquina.agregarPremio(premio, valorPremio);
 
     }
 
 
     public boolean eliminarPremio(int idMaquina, int idPremio) { //Elimina un premio de la lista de premios de una maquina
-        //TODO validar args
         Tragamonedas maquina = this.obtenerMaquina(idMaquina);
         return maquina.quitarPremioDeLista(idPremio);
     }
@@ -127,7 +124,7 @@ public class Controlador {
 
     public boolean puedeJugar(int idMaquina){ //Verifica que se pueda realizar una jugada en la maquina
         Tragamonedas maquina = this.obtenerMaquina(idMaquina);
-        return maquina.verificarSaldoMinimo() && maquina.mostrarCreditoJugador() >= maquina.precioJugada;
+        return maquina.mostrarCreditoJugador() >= maquina.precioJugada;
 
     }
     public boolean existeMaquina(int idMaquina){ //Verifica la existencia de una maquina
@@ -138,6 +135,31 @@ public class Controlador {
         Set<Integer> listado = this.maquinas.keySet();
         return listado;
     }
+
+    public float mostrarPrecioJugada(int idMaquina){
+        Tragamonedas maquina = this.obtenerMaquina(idMaquina);
+        return maquina.precioJugada;
+    }
+
+    public int mostrarCantCasillas(int idMaquina){
+        Tragamonedas maquina = this.obtenerMaquina(idMaquina);
+        return maquina.cantidadCasillas;
+    }
+    public ArrayList<String[]> mostrarListadoPremios(int idMaquina){
+        Tragamonedas maquina = this.obtenerMaquina(idMaquina);
+
+        return maquina.listarPremios();
+    }
+    public boolean haySaldoMinimo(int idMaquina){
+        Tragamonedas maquina = this.obtenerMaquina(idMaquina);
+        return maquina.verificarSaldoMinimo();
+    }
+    public float mostrarValorPremio(int idMaquina,int idPremio){
+        Tragamonedas maquina = this.obtenerMaquina(idMaquina);
+        return maquina.getValorPremio(idPremio);
+
+    }
+
 
 
 

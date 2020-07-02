@@ -1,59 +1,188 @@
 package InterfazGrafica;
 
-import java.awt.Container;
+import ModeloCasino.Controlador;
+import ModeloCasino.Premio;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.Random;
+
+import javax.imageio.ImageIO;
+import javax.swing.*;
+
 
 public class VentanaJugar extends JFrame {
 	
 	private static final long serialVersionUID = 1L;
 	private JLabel lblPrecioJugada;
-	private JButton btnJugar, btnCobrar, btnAceptarPremio, btnSorteado1, btnSorteado2, btnSorteado3, btnCredito;
+	private JButton btnJugar, btnCobrar, btnAgregarCredito, btnCredito,btnPremios;
+
+	private JPanel panelCasillas;
+
+	private final String[] frutas = {"/resources/banana.png","/resources/frutilla.png","/resources/guinda.png","/resources/manzana.png","/resources/sandia.png","/resources/uva.png"};
+
+	private Controlador controlador;
+	private Integer seleccion;
 	
-	public VentanaJugar() {
-		configurar();
-		Eventos();
-	}
-	
-	private void Eventos() {
-		
-		
+	public VentanaJugar(Controlador controlador, Integer seleccion) {
+		this.controlador = controlador;
+		this.seleccion = seleccion;
+		try {
+			configurar();
+		}catch (Exception e){
+			System.out.println("No encontro imagen.");
+		}
+		Eventos(controlador,seleccion);
 	}
 
-	private void configurar() {
+
+
+
+	private void configurar() throws IOException {
 		Container c = this.getContentPane();
 		c.setLayout(null);
-		
-		lblPrecioJugada = new JLabel("Precio jugada = $5");
-		lblPrecioJugada.setBounds(130, 20, 130, 30);
-		btnSorteado1 = new JButton();
-		btnSorteado1.setBounds(60, 80, 60, 60);
-		btnSorteado2 = new JButton();
-		btnSorteado2.setBounds(140, 80, 60, 60);
-		btnSorteado3 = new JButton();
-		btnSorteado3.setBounds(220, 80, 60, 60);
+		int cantCasillas = controlador.mostrarCantCasillas(seleccion);
+
+		lblPrecioJugada = new JLabel("Precio de la jugada: " + controlador.mostrarPrecioJugada(seleccion));
+		lblPrecioJugada.setBounds(30, 0, 280, 30);
+		lblPrecioJugada.setAlignmentX(SwingConstants.CENTER);
+		lblPrecioJugada.setAlignmentY(SwingConstants.CENTER);
+
+
+		//Creo automaticamente la fila de casillas
+
+		panelCasillas = new JPanel(new FlowLayout(FlowLayout.CENTER,2,2));
+		panelCasillas.setSize(280,128);
+
+		Random random = new Random();
+		for(int i = 0; i<cantCasillas;i++){
+
+			Image imagen = ImageIO.read(getClass().getResource(frutas[random.nextInt(frutas.length)]));
+			Image redimension = imagen.getScaledInstance(32,32,Image.SCALE_SMOOTH);
+
+			ImageIcon icono = new ImageIcon(redimension);
+			JButton casilla = new JButton(icono);
+			casilla.setSize(32,32);
+
+			panelCasillas.add(casilla);
+		}
+		panelCasillas.setLocation(30,30);
+
+		panelCasillas.setBackground(Color.DARK_GRAY);
+		c.add(panelCasillas);
+
+
 		btnJugar = new JButton("JUGAR");
-		btnJugar.setBounds(30,170,130,30);
+		btnJugar.setBounds(30,160,130,30);
+		btnJugar.setBackground(Color.RED);
 		btnCobrar = new JButton("Cobrar");
-		btnCobrar.setBounds(30, 215, 130, 30);
-		btnAceptarPremio = new JButton("Aceptar premio");
-		btnAceptarPremio.setBounds(180, 215, 130, 30);
-		btnCredito = new JButton("Crédito: $1000");
-		btnCredito.setBounds(180, 170, 130, 30);
+		btnCobrar.setBounds(30, 190, 130, 30);
+		btnAgregarCredito = new JButton("Agregar Credito");
+		btnAgregarCredito.setBounds(180, 190, 130, 30);
+		btnCredito = new JButton("Crédito: " + controlador.mostrarCreditoMaquina(seleccion));
+		btnCredito.setBounds(180, 160, 130, 30);
+		btnPremios = new JButton("Ver Premios");
+		btnPremios.setBounds(30,220,130,30);
+
+
 
 		c.add(lblPrecioJugada);
 		c.add(btnJugar);
-		c.add(btnSorteado1);
-		c.add(btnSorteado2);
-		c.add(btnSorteado3);
 		c.add(btnCobrar);
-		c.add(btnAceptarPremio);
+		c.add(btnAgregarCredito);
 		c.add(btnCredito);
+		c.add(btnPremios);
 	}
 
-	
+	private void Eventos(Controlador controlador, Integer seleccion) {
+		btnJugar.addActionListener(new ActionListener() {
+			//TODO Falta actualizar las frutitas
+			@Override
+			public void actionPerformed(ActionEvent e) { //Abro una ventana nueva
+				if (controlador.puedeJugar(seleccion)) {
+					float premio = controlador.realizarJugada(seleccion);
+					btnCredito.setText("Credito: " + controlador.mostrarCreditoMaquina(seleccion));
+					for (int i = 0;i<controlador.mostrarCantCasillas(seleccion);i++){
+						JButton boton = (JButton) panelCasillas.getComponent(i);
+						Image imagen = null;
+						try {
+							imagen = ImageIO.read(getClass().getResource("/resources/"+controlador.mostrarUltimaJugada(seleccion)[i]+".png"));
+						} catch (IOException ioException) {
+							ioException.printStackTrace();
+						}
+						Image redimension = imagen.getScaledInstance(32,32,Image.SCALE_SMOOTH);
+
+						ImageIcon icono = new ImageIcon(redimension);
+						boton.setIcon(icono);
+					}
+
+					if (premio != 0 && controlador.haySaldoMinimo(seleccion)){
+						int respuesta = JOptionPane.showConfirmDialog(null,"Acepta el premio de " + premio + "?","Acepta premio?",JOptionPane.YES_NO_OPTION);
+						if (respuesta == 0){
+							controlador.aceptarPremio(seleccion,premio);
+							btnCredito.setText("Credito: "+controlador.mostrarCreditoMaquina(seleccion));
+						}
+					}
+					else if(premio != 0 && !controlador.haySaldoMinimo(seleccion)){
+						JOptionPane.showMessageDialog(null,"La maquina no posee saldo suficiente para pagar el premio. ","Saldo insuficiente",JOptionPane.WARNING_MESSAGE);
+					}
+				}else {
+					JOptionPane.showMessageDialog(null,"No tenes credito para continuar jugando. Cargale mas.");
+				}
+
+
+			}
+		});
+		btnCobrar.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) { //Abro una ventana nueva
+				String mensaje = "Se cobraron " + controlador.cobrarCreditoDisponible(seleccion) + "$. ";
+				JOptionPane.showConfirmDialog(null,mensaje,"Cobrar Credito",JOptionPane.OK_OPTION);
+				btnCredito.setText("Credito: " + controlador.mostrarCreditoMaquina(seleccion));
+
+			}
+		});
+		btnAgregarCredito.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) { //Abro una ventana nueva
+				JPanel inputPanel = new JPanel(new GridLayout(2,1));
+
+				JLabel lblMensaje = new JLabel("Cuanto credito quiere agregar?");
+				JTextField textInput = new JTextField("0");
+
+				inputPanel.add(lblMensaje);
+				inputPanel.add(textInput);
+
+				if(0==JOptionPane.showConfirmDialog(null,inputPanel,"agregar credito?",JOptionPane.OK_CANCEL_OPTION)){
+					controlador.agregarCreditoAlJugador(seleccion,Float.parseFloat(textInput.getText()));
+					btnCredito.setText("Credito: " + controlador.mostrarCreditoMaquina(seleccion));
+				}
+
+
+			}
+		});
+
+		btnPremios.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JPanel premios = new JPanel(new GridLayout(controlador.mostrarListadoPremios(seleccion).size(),1,0,2));
+				int j = 0;
+				for(String[] string : controlador.mostrarListadoPremios(seleccion)){
+					JLabel lbl = new JLabel(Arrays.toString(string) + " Valor: " + controlador.mostrarValorPremio(seleccion,j));
+					lbl.setHorizontalTextPosition(SwingConstants.CENTER);
+					j++;
+					premios.add(lbl);
+				}
+				JOptionPane.showMessageDialog(null,premios,"Premios disponibles",JOptionPane.PLAIN_MESSAGE);
+			}
+		});
+
+	}
 
 	
 	
