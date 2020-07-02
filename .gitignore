@@ -2,3 +2,7 @@
 Grupo2_FaseC.zip
 *.class
 *.class
+*.class
+bin/META-INF/MANIFEST.MF
+classes/artifacts/TPO_IOO_jar/TPO IOO.jar
+bin/InterfazGrafica/Main.class

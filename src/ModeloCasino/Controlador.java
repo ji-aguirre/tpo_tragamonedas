@@ -11,59 +11,40 @@ public class Controlador {
 
     public HashMap maquinas=new HashMap<Integer,Tragamonedas>(); //uso un mapa para guardar el id y el tragamonedas correspondiente
 
-    public Tragamonedas obtenerMaquina(int idMaquina){ //Obtiene la instacia de la maquina a la cual pertenece el id
-        //TODO validacion de argumentos
+    private Tragamonedas obtenerMaquina(int idMaquina){ //Obtiene la instacia de la maquina a la cual pertenece el id
         Integer id = idMaquina;
         Tragamonedas maquina = (Tragamonedas) this.maquinas.get(id);
         return maquina;
     }
 
     public void iniciarJuego(float saldoInicial, int idMaquina) { //Empieza un nuevo jugador en la maquina (Pasa credito inicial del jugador)
-        //TODO validar args
         Tragamonedas maquina = this.obtenerMaquina(idMaquina);
         maquina.iniciarSesionJugador(saldoInicial);
 
     }
 
     public float cobrarCreditoDisponible(int idMaquina) { //"Retira" el credito del jugador (destructivo)
-        //TODO validar args
         Tragamonedas maquina = this.obtenerMaquina(idMaquina);
         return maquina.cobrarSaldoDisponible();
     }
 
     public float realizarJugada(int idMaquina) { //Genera una nueva jugada en una maquina y devuelve el monto del premio ganado (0 si no hubo premio)
-        //TODO validar args
         Tragamonedas maquina = this.obtenerMaquina(idMaquina);
 
-        if (maquina.mostrarCreditoJugador() < maquina.precioJugada){ //Si el jugador no tiene credito no juega
-            return 0;
-        }else {
-            maquina.descontarCreditoJugador(maquina.precioJugada); //descuento valor de jugada
-            maquina.incrementarCaja(maquina.precioJugada);
-
-            maquina.generarJugada();
-            System.out.println("jugadaaaaaaaaa");
-            return maquina.tienePremio(maquina.getUltimaJugada());
-
-        }
+        return maquina.jugar();
 
     }
 
     public void aceptarPremio(int idMaquina, float valorPremio) { //Acepta el premio de una maquina
-        //TODO validar args
         Tragamonedas maquina = this.obtenerMaquina(idMaquina);
-        if(maquina.verificarSaldoMinimo()) {
-            maquina.aceptarPremio(valorPremio);
-        }else{
-            System.out.println("La maquina no posee saldo para pagar el premio. ");
-        }
+        maquina.aceptarPremio(valorPremio);
+
 
 
     }
 
 
     public int crearTragamonedas(float saldoInicial, int casillas, float precioJugada) {  //Crea una nueva maquina y la agrega a lista de maquinas
-        //TODO validar args
         Tragamonedas nuevaMaquina = new Tragamonedas(saldoInicial, casillas, precioJugada);
         int id = this.maquinas.size() + 1;
         nuevaMaquina.id = id;
@@ -78,7 +59,6 @@ public class Controlador {
 
 
     public Tragamonedas eliminarTragamonedas(int idMaquina) { //Elimina una maquina del listado de maquinas (destructivo)
-        //TODO validar args
         Tragamonedas maquina = (Tragamonedas) this.maquinas.get(idMaquina);
         return (Tragamonedas) this.maquinas.remove(idMaquina);
 
@@ -86,7 +66,6 @@ public class Controlador {
 
 
     public void agregarCreditoAlJugador(int idMaquina, float credito) { //Agrega credito al jugador actual de la maquina
-        //TODO validar args
         Tragamonedas maquina = this.obtenerMaquina(idMaquina);
         maquina.agregarCreditoJugador(credito);
 
@@ -94,7 +73,6 @@ public class Controlador {
 
 
     public void agregarPremio(int idMaquina, String[] premio, float valorPremio) { //Agrega un premio a la lista de premios de una maquina
-        //TODO validar args
         Tragamonedas maquina = this.obtenerMaquina(idMaquina);
         maquina.agregarPremio(premio, valorPremio);
 

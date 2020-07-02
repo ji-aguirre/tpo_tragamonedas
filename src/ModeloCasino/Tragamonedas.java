@@ -59,7 +59,6 @@ public class Tragamonedas extends Premio {
     	for(int i = 0; i< this.cantidadCasillas;i++){
     		numeros[i] = rng.nextInt(this.frutas.length); //RNG para determinar que fruta sale
 
-
     	}
     	for(int i = 0; i< this.cantidadCasillas;i++){
     		jugada[i] = this.frutas[numeros[i]]; //Transformo la lista de RNG en strings
@@ -72,11 +71,25 @@ public class Tragamonedas extends Premio {
         return this.ultimaJugada;
     }
 
+    public float jugar(){
+        if (this.mostrarCreditoJugador() < this.precioJugada){ //Si el jugador no tiene credito no juega
+            return 0;
+        }else {
+            this.descontarCreditoJugador(this.precioJugada); //descuento valor de jugada
+            this.incrementarCaja(this.precioJugada);
+
+            this.generarJugada();
+            return this.tienePremio(this.getUltimaJugada());
+
+        }
+    }
+
 
     public void aceptarPremio(float valorPremio) { //TODO validar args
-        this.agregarCreditoJugador(valorPremio);
-        //System.out.println("Agregue al jugador" + valorPremio);
-        this.cajaActual.reducirSaldo(valorPremio);
+        if (this.verificarSaldoMinimo()) {
+            this.agregarCreditoJugador(valorPremio);
+            this.cajaActual.reducirSaldo(valorPremio);
+        }
     }
 
     public void agregarCreditoJugador(float credito){
