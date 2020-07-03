@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="TPO IOO:jar">
+    <output-path>$PROJECT_DIR$/classes/artifacts/TPO_IOO_jar</output-path>
+    <root id="archive" name="TPO IOO.jar">
+      <element id="module-output" name="TPO IOO" />
+    </root>
+  </artifact>
+</component>
