@@ -114,6 +114,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener,ChangeLis
 	private void configurar() {
 		Container c = this.getContentPane();
 		c.setLayout(null);
+		c.setBackground(Color.RED);
 		this.setTitle("Casino Virtual");
 		
 		lblMaquinasDisponibles = new JLabel("Máquinas Disponibles");
@@ -127,13 +128,26 @@ public class VentanaPrincipal extends JFrame implements ActionListener,ChangeLis
 
 		btnJugar = new JButton("JUGAR");
 		btnJugar.setBounds(200, 80, 150, 30);
-		btnJugar.setBackground(Color.darkGray);
+		btnJugar.setBackground(Color.RED);
 		btnAgregarMaquina = new JButton("Agregar Máquina");
 		btnAgregarMaquina.setBounds(200, 120, 150, 30);
+		btnAgregarMaquina.setBackground(Color.WHITE);
 		btnSalir = new JButton("Salir");
 		btnSalir.setBounds(200,160,150,30);
+		btnSalir.setBackground(Color.RED);
 		btnConfigurar = new JButton("Configurar");
 		btnConfigurar.setBounds(200,200,150,30);
+		btnConfigurar.setBackground(Color.WHITE);
+		
+		Image imagen = ImageIO.read(getClass().getResource("/resouces/casino.jpg");
+		Image redimension = imagen.getScaledInstance(32,32,Image.SCALE_SMOOTH);
+
+		ImageIcon icono = new ImageIcon(redimension);
+		JButton casilla = new JButton(icono);
+		casilla.setSize(32,32);
+
+		c.add(casilla);
+		
 		
 		c.add(lblMaquinasDisponibles);
 		c.add(cboMaquinasDisponibles);
