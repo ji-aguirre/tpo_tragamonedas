@@ -139,7 +139,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener,ChangeLis
 		btnConfigurar.setBounds(200,200,150,30);
 		btnConfigurar.setBackground(Color.WHITE);
 		
-		Image imagen = ImageIO.read(getClass().getResource("/resouces/casino.jpg");
+		Image imagen = ImageIO.read(getClass().getResource("/resouces/casino.jpg"));
 		Image redimension = imagen.getScaledInstance(32,32,Image.SCALE_SMOOTH);
 
 		ImageIcon icono = new ImageIcon(redimension);
