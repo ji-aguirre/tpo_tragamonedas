@@ -13,6 +13,9 @@ import java.util.Random;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
+import static java.lang.Math.ceil;
+import static java.lang.Math.sqrt;
+
 
 public class VentanaJugar extends JFrame {
 	
@@ -48,20 +51,22 @@ public class VentanaJugar extends JFrame {
 
 		lblPrecioJugada = new JLabel("Precio de la jugada: " + controlador.mostrarPrecioJugada(seleccion));
 		lblPrecioJugada.setBounds(30, 0, 280, 30);
+		lblPrecioJugada.setHorizontalTextPosition(SwingConstants.CENTER);
 		lblPrecioJugada.setAlignmentX(SwingConstants.CENTER);
 		lblPrecioJugada.setAlignmentY(SwingConstants.CENTER);
 
 
 		//Creo automaticamente la fila de casillas
-
-		panelCasillas = new JPanel(new FlowLayout(FlowLayout.CENTER,2,2));
+		int columns = (int)sqrt(cantCasillas);
+		int lines = (int)ceil(cantCasillas / (float)columns);
+		panelCasillas = new JPanel(new GridLayout(columns,lines,2,2));
 		panelCasillas.setSize(280,128);
 
 		Random random = new Random();
 		for(int i = 0; i<cantCasillas;i++){
 
 			Image imagen = ImageIO.read(getClass().getResource(frutas[random.nextInt(frutas.length)]));
-			Image redimension = imagen.getScaledInstance(280/cantCasillas,280/cantCasillas,Image.SCALE_SMOOTH); //Aca habria que encontrar la manera de escalar las imagenes en base a la cantidad de casillas
+			Image redimension = imagen.getScaledInstance(280/columns,128/lines,Image.SCALE_SMOOTH); //Aca habria que encontrar la manera de escalar las imagenes en base a la cantidad de casillas
 
 			ImageIcon icono = new ImageIcon(redimension);
 			JLabel casilla = new JLabel(icono);
@@ -112,7 +117,7 @@ public class VentanaJugar extends JFrame {
 						} catch (IOException ioException) {
 							ioException.printStackTrace();
 						}
-						Image redimension = imagen.getScaledInstance(280/controlador.mostrarCantCasillas(seleccion),280/controlador.mostrarCantCasillas(seleccion),Image.SCALE_SMOOTH);
+						Image redimension = imagen.getScaledInstance(280/controlador.mostrarCantCasillas(seleccion),128/controlador.mostrarCantCasillas(seleccion),Image.SCALE_SMOOTH);
 
 						ImageIcon icono = new ImageIcon(redimension);
 						boton.setIcon(icono);
