@@ -61,11 +61,11 @@ public class VentanaJugar extends JFrame {
 		for(int i = 0; i<cantCasillas;i++){
 
 			Image imagen = ImageIO.read(getClass().getResource(frutas[random.nextInt(frutas.length)]));
-			Image redimension = imagen.getScaledInstance(32,32,Image.SCALE_SMOOTH);
+			Image redimension = imagen.getScaledInstance(280/cantCasillas,280/cantCasillas,Image.SCALE_SMOOTH); //Aca habria que encontrar la manera de escalar las imagenes en base a la cantidad de casillas
 
 			ImageIcon icono = new ImageIcon(redimension);
-			JButton casilla = new JButton(icono);
-			casilla.setSize(32,32);
+			JLabel casilla = new JLabel(icono);
+			//casilla.setSize(280/cantCasillas,128/cantCasillas);
 
 			panelCasillas.add(casilla);
 		}
@@ -99,21 +99,20 @@ public class VentanaJugar extends JFrame {
 
 	private void Eventos(Controlador controlador, Integer seleccion) {
 		btnJugar.addActionListener(new ActionListener() {
-			//TODO Falta actualizar las frutitas
 			@Override
 			public void actionPerformed(ActionEvent e) { //Abro una ventana nueva
 				if (controlador.puedeJugar(seleccion)) {
 					float premio = controlador.realizarJugada(seleccion);
 					btnCredito.setText("Credito: " + controlador.mostrarCreditoMaquina(seleccion));
 					for (int i = 0;i<controlador.mostrarCantCasillas(seleccion);i++){
-						JButton boton = (JButton) panelCasillas.getComponent(i);
+						JLabel boton = (JLabel) panelCasillas.getComponent(i);
 						Image imagen = null;
 						try {
 							imagen = ImageIO.read(getClass().getResource("/resources/"+controlador.mostrarUltimaJugada(seleccion)[i]+".png"));
 						} catch (IOException ioException) {
 							ioException.printStackTrace();
 						}
-						Image redimension = imagen.getScaledInstance(32,32,Image.SCALE_SMOOTH);
+						Image redimension = imagen.getScaledInstance(280/controlador.mostrarCantCasillas(seleccion),280/controlador.mostrarCantCasillas(seleccion),Image.SCALE_SMOOTH);
 
 						ImageIcon icono = new ImageIcon(redimension);
 						boton.setIcon(icono);

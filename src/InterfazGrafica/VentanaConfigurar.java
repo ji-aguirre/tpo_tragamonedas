@@ -47,16 +47,16 @@ public class VentanaConfigurar extends JFrame {
 		c.setLayout(null);
 
 		btnAgregarPremio = new JButton("Agregar premio");
-		btnAgregarPremio.setBounds(30, 30, 130, 30);
+		btnAgregarPremio.setBounds(40, 30, 150, 30);
 		btnEliminarMaquina = new JButton("Eliminar máquina");
-		btnEliminarMaquina.setBounds(30, 90, 130, 30);
+		btnEliminarMaquina.setBounds(40, 90, 150, 30);
 		btnSacarPremio = new JButton("Sacar premio");
-		btnSacarPremio.setBounds(30, 150, 130, 30);
+		btnSacarPremio.setBounds(40, 150, 150, 30);
 		cboPremios = new JComboBox<String>();
 		for(String[] premio : controlador.mostrarListadoPremios(seleccion)){
 			cboPremios.addItem(Arrays.toString(premio));
 		}
-		cboPremios.setBounds(200, 150, 130, 30);
+		cboPremios.setBounds(200, 150, 150, 30);
 
 		btn1 = new JButton(frutas[0]);
 		btn2 = new JButton(frutas[1]);
@@ -99,19 +99,20 @@ public class VentanaConfigurar extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) { //Abro una ventana nueva
 
-				panelGral = new JPanel(new GridLayout(3,1));
+				panelGral = new JPanel(new GridLayout(3,1,5,10));
 
-				JPanel panelSuperior = new JPanel(new GridLayout(2,1));
-				JLabel lblAgregarAlPremio = new JLabel("Tocar los botones para agregar fruta al premio. ");
+				JPanel panelSuperior = new JPanel(new GridLayout(2,1,10,5));
+				JLabel lblAgregarAlPremio = new JLabel("Tocar los botones para agregar fruta al premio.");
 				panelSuperior.add(lblAgregarAlPremio);
 				lblAgregados = new JLabel("");
+				lblAgregados.setHorizontalTextPosition(SwingConstants.CENTER);
 
 				panelSuperior.add(lblAgregados);
 
 				nuevoPremio = new ArrayList<String>();
 
 
-				JPanel panelBotones = new JPanel(new GridLayout(1,6));
+				JPanel panelBotones = new JPanel(new GridLayout(1,6,5,10));
 
 
 				panelBotones.add(btn1);
@@ -153,7 +154,7 @@ public class VentanaConfigurar extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (cantCasillas>0) {
-					lblAgregados.setText(lblAgregados.getText() + btn1.getText());
+					lblAgregados.setText(lblAgregados.getText() +" "+ btn1.getText());
 					nuevoPremio.add(btn1.getText());
 					cantCasillas--;
 				}
@@ -164,7 +165,7 @@ public class VentanaConfigurar extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (cantCasillas>0) {
-					lblAgregados.setText(lblAgregados.getText() + btn2.getText());
+					lblAgregados.setText(lblAgregados.getText() +" "+ btn2.getText());
 					nuevoPremio.add(btn2.getText());
 					cantCasillas--;
 				}
@@ -175,7 +176,7 @@ public class VentanaConfigurar extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (cantCasillas>0) {
-					lblAgregados.setText(lblAgregados.getText() + btn3.getText());
+					lblAgregados.setText(lblAgregados.getText() +" "+ btn3.getText());
 					nuevoPremio.add(btn3.getText());
 					cantCasillas--;
 				}
@@ -186,7 +187,7 @@ public class VentanaConfigurar extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (cantCasillas>0) {
-					lblAgregados.setText(lblAgregados.getText() + btn4.getText());
+					lblAgregados.setText(lblAgregados.getText() +" "+ btn4.getText());
 					nuevoPremio.add(btn4.getText());
 					cantCasillas--;
 				}
@@ -197,7 +198,7 @@ public class VentanaConfigurar extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (cantCasillas>0) {
-					lblAgregados.setText(lblAgregados.getText() + btn5.getText());
+					lblAgregados.setText(lblAgregados.getText() +" "+ btn5.getText());
 					nuevoPremio.add(btn5.getText());
 					cantCasillas--;
 				}
@@ -208,7 +209,7 @@ public class VentanaConfigurar extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (cantCasillas>0) {
-					lblAgregados.setText(lblAgregados.getText() + btn6.getText());
+					lblAgregados.setText(lblAgregados.getText() +" "+ btn6.getText());
 					nuevoPremio.add(btn6.getText());
 					cantCasillas--;
 				}

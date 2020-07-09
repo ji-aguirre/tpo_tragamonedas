@@ -3,8 +3,10 @@ package InterfazGrafica;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.Set;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -27,7 +29,11 @@ public class VentanaPrincipal extends JFrame implements ActionListener,ChangeLis
 
 	public VentanaPrincipal(Controlador control){
 		this.control = control;
-		configurar();
+		try {
+			configurar();
+		}catch (Exception e){
+			System.out.println("No encontro imagen.");
+		}
 		eventos(this.control);
 	}
 
@@ -111,44 +117,45 @@ public class VentanaPrincipal extends JFrame implements ActionListener,ChangeLis
 	}
 
 
-	private void configurar() {
+	private void configurar() throws IOException {
 		Container c = this.getContentPane();
 		c.setLayout(null);
-		c.setBackground(Color.RED);
+		//c.setBackground();
 		this.setTitle("Casino Virtual");
+		this.setVisible(true);
 		
 		lblMaquinasDisponibles = new JLabel("Máquinas Disponibles");
-		lblMaquinasDisponibles.setBounds(40, 40, 130, 30);
+		lblMaquinasDisponibles.setBounds(40, 20, 130, 30);
 		cboMaquinasDisponibles = new JComboBox<Integer>();
-		cboMaquinasDisponibles.setBounds(30, 80, 150, 30);
+		cboMaquinasDisponibles.setBounds(30, 60, 150, 30);
 		this.maquinasDisponibles = control.listadoMaquinas();
 		for(Integer maquina : this.maquinasDisponibles) {
 			cboMaquinasDisponibles.addItem(maquina);
 		}
 
 		btnJugar = new JButton("JUGAR");
-		btnJugar.setBounds(200, 80, 150, 30);
+		btnJugar.setBounds(200, 60, 150, 30);
 		btnJugar.setBackground(Color.RED);
+		btnJugar.setFont(new Font(Font.SERIF,Font.BOLD,15));
 		btnAgregarMaquina = new JButton("Agregar Máquina");
-		btnAgregarMaquina.setBounds(200, 120, 150, 30);
+		btnAgregarMaquina.setBounds(200, 100, 150, 30);
 		btnAgregarMaquina.setBackground(Color.WHITE);
-		btnSalir = new JButton("Salir");
-		btnSalir.setBounds(200,160,150,30);
-		btnSalir.setBackground(Color.RED);
 		btnConfigurar = new JButton("Configurar");
-		btnConfigurar.setBounds(200,200,150,30);
+		btnConfigurar.setBounds(200,140,150,30);
 		btnConfigurar.setBackground(Color.WHITE);
+		btnSalir = new JButton("Salir");
+		btnSalir.setBounds(200,180,150,30);
+		btnSalir.setBackground(Color.LIGHT_GRAY);
 		
-		Image imagen = ImageIO.read(getClass().getResource("/resouces/casino.jpg"));
-		Image redimension = imagen.getScaledInstance(32,32,Image.SCALE_SMOOTH);
+		Image imagen = ImageIO.read(getClass().getResource("/resources/casino.jpg"));
+		Image redimension = imagen.getScaledInstance(150,110,Image.SCALE_SMOOTH);
 
 		ImageIcon icono = new ImageIcon(redimension);
-		JButton casilla = new JButton(icono);
-		casilla.setSize(32,32);
-
+		JLabel casilla = new JLabel(icono);
+		casilla.setLocation(30,100);
+		casilla.setSize(150,110);
 		c.add(casilla);
-		
-		
+
 		c.add(lblMaquinasDisponibles);
 		c.add(cboMaquinasDisponibles);
 		c.add(btnJugar);
